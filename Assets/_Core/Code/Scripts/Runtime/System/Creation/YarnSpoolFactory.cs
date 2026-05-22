@@ -7,6 +7,11 @@ namespace WoolGame
     {
         [SerializeField] private SplineComputer defaultConveyorSpline;
 
+        public void SetDefaultConveyorSpline(SplineComputer spline)
+        {
+            defaultConveyorSpline = spline;
+        }
+
         protected override YarnSpoolDomain CreateDomain(YarnSpoolSpawnData data)
         {
             return new YarnSpoolDomain(data);

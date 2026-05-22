@@ -18,7 +18,12 @@ namespace WoolGame
             }
 
             var sample = spline.Evaluate(evt.Progress);
-            movingRoot.SetPositionAndRotation(sample.position, sample.rotation);
+            movingRoot.position = sample.position;
+
+            if (sample.forward.sqrMagnitude > 0.0001f && sample.up.sqrMagnitude > 0.0001f)
+            {
+                movingRoot.rotation = sample.rotation;
+            }
         }
     }
 }

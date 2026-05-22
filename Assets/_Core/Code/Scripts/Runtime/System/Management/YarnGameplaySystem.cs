@@ -14,32 +14,33 @@ namespace WoolGame
 
         private void Awake()
         {
-            if (domainManager == null)
-            {
-                domainManager = GetComponent<EntityDomainManager>();
-            }
+            ResolveDependencies();
         }
 
         public ConveyorDomain CreateConveyor(ConveyorSpawnData data)
         {
+            ResolveDependencies();
             data.entityId = AllocateEntityId(data.entityId);
             return conveyorFactory.Create(data, domainManager);
         }
 
         public YarnSpoolDomain CreateYarnSpool(YarnSpoolSpawnData data)
         {
+            ResolveDependencies();
             data.entityId = AllocateEntityId(data.entityId);
             return yarnSpoolFactory.Create(data, domainManager);
         }
 
         public WoolBlockDomain CreateWoolBlock(WoolBlockSpawnData data)
         {
+            ResolveDependencies();
             data.entityId = AllocateEntityId(data.entityId);
             return woolBlockFactory.Create(data, domainManager);
         }
 
         public YarnThreadDomain CreateYarnThread(YarnThreadSpawnData data)
         {
+            ResolveDependencies();
             data.entityId = AllocateEntityId(data.entityId);
             return yarnThreadFactory.Create(data, domainManager);
         }
@@ -65,6 +66,54 @@ namespace WoolGame
             }
 
             return nextEntityId++;
+        }
+
+        private void ResolveDependencies()
+        {
+            if (domainManager == null)
+            {
+                domainManager = GetComponent<EntityDomainManager>();
+                if (domainManager == null)
+                {
+                    domainManager = gameObject.AddComponent<EntityDomainManager>();
+                }
+            }
+
+            if (yarnSpoolFactory == null)
+            {
+                yarnSpoolFactory = GetComponent<YarnSpoolFactory>();
+                if (yarnSpoolFactory == null)
+                {
+                    yarnSpoolFactory = gameObject.AddComponent<YarnSpoolFactory>();
+                }
+            }
+
+            if (woolBlockFactory == null)
+            {
+                woolBlockFactory = GetComponent<WoolBlockFactory>();
+                if (woolBlockFactory == null)
+                {
+                    woolBlockFactory = gameObject.AddComponent<WoolBlockFactory>();
+                }
+            }
+
+            if (yarnThreadFactory == null)
+            {
+                yarnThreadFactory = GetComponent<YarnThreadFactory>();
+                if (yarnThreadFactory == null)
+                {
+                    yarnThreadFactory = gameObject.AddComponent<YarnThreadFactory>();
+                }
+            }
+
+            if (conveyorFactory == null)
+            {
+                conveyorFactory = GetComponent<ConveyorFactory>();
+                if (conveyorFactory == null)
+                {
+                    conveyorFactory = gameObject.AddComponent<ConveyorFactory>();
+                }
+            }
         }
     }
 }
