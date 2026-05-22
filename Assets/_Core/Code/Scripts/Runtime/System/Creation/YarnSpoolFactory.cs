@@ -1,0 +1,20 @@
+using Dreamteck.Splines;
+using UnityEngine;
+
+namespace WoolGame
+{
+    public sealed class YarnSpoolFactory : EntityFactoryBase<YarnSpoolSpawnData, YarnSpoolDomain, YarnSpoolVisual>
+    {
+        [SerializeField] private SplineComputer defaultConveyorSpline;
+
+        protected override YarnSpoolDomain CreateDomain(YarnSpoolSpawnData data)
+        {
+            return new YarnSpoolDomain(data);
+        }
+
+        protected override void ConfigureVisual(YarnSpoolVisual visual, YarnSpoolDomain domain, YarnSpoolSpawnData data)
+        {
+            visual.SetConveyorSpline(defaultConveyorSpline);
+        }
+    }
+}
